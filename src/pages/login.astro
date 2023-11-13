@@ -1,0 +1,202 @@
+---
+import '@fontsource-variable/syne';
+import { ViewTransitions } from 'astro:transitions';
+ const cookie = Astro.cookies.has("user");
+ const hasExpanded = Astro.cookies.has("expanded");
+
+if(cookie){
+	return Astro.redirect('/dashboard');
+}
+if(!hasExpanded){
+	Astro.cookies.set("expanded",true);
+}
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+		<ViewTransitions />
+	</head>
+	<body class="body relative bg-lighter-black min-w-[1200px] min-h-[600px] w-screen h-screen overflow-scroll transition:persist scrollbar-hide">
+     <div class="flex flex-col items-center justify-center w-full h-full overflow-clip ">
+		 <div>
+			<h2 class="font-syne text-[#C7CECF] font-bold w-full mb-2">
+				Welcome to Hound
+			</h2>
+			<div class="rounded-t-[15px] bg-input-background backdrop-blur-[12.5px] border-b-input-border">
+				<input
+					class="email bg-inherit mix-blend-overlay text-white rounded-t-[15px] backdrop-blur-[12.5px] border-b-[2px] border-b-input-border w-[260px] h-[55px] tracking-[0.12rem] focus:outline-none block text-[11px] px-6"
+					type="email"
+					maxLength="60"
+					placeholder="USERNAME / EMAIL"
+				/>
+			</div>
+			<div class="flex flex-row items-center justify-between bg-input-background w-[260px] backdrop-blur-[12.5px] rounded-b-[15px]">
+				<input
+					class="password inline-block w-[90%] pl-6 pr-2 text-[11px] bg-inherit mix-blend-overlay text-white h-[55px]  focus:outline-none block rounded-b-[15px] tracking-[0.12rem]"
+					type="password"
+					maxLength="60"
+					placeholder="PASSWORD"
+				/>
+			  <svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					height="20"
+					viewBox="0 0 24 24"
+					class="show hidden mix-blend-overlay w-[40px] hover:cursor-pointer pr-5"
+				>
+					<g
+						fill="none"
+						stroke="#fff"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth="2"
+					>
+						<path d="M3.587 13.779c1.78 1.769 4.883 4.22 8.413 4.22 3.53 0 6.634-2.451 8.413-4.22.47-.467.705-.7.854-1.159.107-.327.107-.913 0-1.24-.15-.458-.385-.692-.854-1.159C18.633 8.452 15.531 6 12 6c-3.53 0-6.634 2.452-8.413 4.221-.47.467-.705.7-.854 1.159-.107.327-.107.913 0 1.24.15.458.384.692.854 1.159z"></path>
+						<path d="M10 12a2 2 0 104 0 2 2 0 00-4 0z"></path>
+					</g>
+				</svg>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					height="20"
+					viewBox="0 0 24 24"
+					class="hide inline-block mix-blend-overlay w-[40px] hover:cursor-pointer pr-5"
+				>
+					<path
+						fill="none"
+						stroke="#fff"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth="2"
+						d="M4 4l16 16m-3.5-3.244C15.147 17.485 13.618 18 12 18c-3.53 0-6.634-2.452-8.413-4.221-.47-.467-.705-.7-.854-1.159-.107-.327-.107-.913 0-1.24.15-.459.385-.693.855-1.16.897-.892 2.13-1.956 3.584-2.793M19.5 14.634c.333-.293.638-.582.912-.854l.003-.003c.468-.466.703-.7.852-1.156.107-.327.107-.914 0-1.241-.15-.458-.384-.692-.854-1.159C18.633 8.452 15.53 6 12 6c-.338 0-.671.022-1 .064m2.323 7.436a2 2 0 01-2.762-2.889"
+					></path>
+				</svg>
+			</div>
+			<button class="login h-[55px] w-[260px] tracking-[0.12rem] text-[11px] bg-[#C7CECF] rounded-[15px] pl-6 mt-3 text-left">
+				LOG IN
+				<svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      class="float-right mr-5"
+    >
+      <path
+        fill="none"
+        stroke="#000"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M9 5l7 7-7 7"
+      ></path>
+    </svg>
+			</button>
+		</div>
+			<div class="absolute w-full h-full z-[-1] overflow-clip">
+	<div class="absolute rotate-[-36.25deg] top-[70%] left-[20%] h-[40%] block">			
+  <span class="font-syne relative right-[3%] top-[15%] text-[100px] text-white opacity-[0.02] font-extrabold block">
+  	HOUNDHOUND
+  </span>
+  <span class="font-syne relative left-[3%] text-[100px] text-white opacity-[0.02] font-extrabold block">
+  	HOUNDHOUND
+  </span>
+  <span class="font-syne relative bottom-[15%] text-[100px] text-white opacity-[0.02] font-extrabold block">
+  	HOUNDHOUND
+  </span>
+</div>
+</div>
+	</div>
+	</body>
+</html>
+
+<script>
+import { signIn } from "../firebase/firebaseUtils.js";	
+import cookie from "js-cookie";
+
+
+const loginButton = document.querySelector(".login");
+const email = document.querySelector(".email");
+const password = document.querySelector(".password");
+const show = document.querySelector(".show");
+const hide = document.querySelector(".hide");
+
+
+/* const handleLoad = ()=>{
+return;
+const maxWidth = window.screen.width;
+const maxHeight = window.screen.height;
+
+const body = document.querySelector(".body");
+body.style.width = `${maxWidth}px`;
+body.style.height = `${maxHeight}px`;
+};
+*/
+
+const handleSubmit = async ()=>{
+const emailValue = email.value;
+const passwordValue = password.value;
+
+if(!emailValue||!passwordValue){
+	return;
+}
+
+const results = await signIn(emailValue, passwordValue);
+
+if(results[1]){
+cookie.set("user", results[1],{path:"/", expires:1});
+window.location.assign("/dashboard");
+}
+else {
+	return;
+}
+
+
+}
+
+//window.addEventListener("load", handleLoad);
+
+document.addEventListener('keydown', function(event) {
+ 
+  if (event.keyCode === 13 || event.key === 'Enter') {
+    
+      handleSubmit()
+  }
+  
+  if (event.keyCode === 38 || event.key === 'ArrowUp') {
+    email.focus();
+  }
+  
+  if (event.keyCode === 40 || event.key === 'ArrowDown') {
+    password.focus();
+  }
+});
+
+
+loginButton.addEventListener("click",handleSubmit);
+
+show.addEventListener('click',()=>{
+	show.classList.remove("inline-block");
+	show.classList.add("hidden");
+	hide.classList.add("inline-block");
+	hide.classList.remove("hidden");
+	password.type="password";
+});
+
+hide.addEventListener('click',()=>{
+
+hide.classList.remove("inline-block");
+hide.classList.add("hidden");
+show.classList.add("inline-block");
+show.classList.remove("hidden");
+password.type="text";
+});
+
+
+
+</script>

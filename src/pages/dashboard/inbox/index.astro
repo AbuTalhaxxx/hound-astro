@@ -1,0 +1,27 @@
+---
+import MainLayout from '../../../components/MainLayout.astro';
+import '@fontsource-variable/syne';
+import '@fontsource-variable/space-grotesk';
+import ReactItem from '../../../components/ReactItem.jsx';
+
+let user = "";
+if(Astro.cookies.has("user")){
+
+user = Astro.cookies.get("user").value;
+}
+else {
+	    return Astro.redirect("/login");
+}
+
+---
+<MainLayout>
+	<div class="flex flex-row items-center justify-start h-[60px] bg-input-background w-full rounded-[10px] my-[10px]">
+		<a class="inline-block bg-input-background p-[10px] mx-[15px] rounded-[5px] text-white text-[12px] font-grotesk" href="/dashboard/inbox">
+			MAILBOX
+		</a>
+		<a class="inline-block p-[10px] bg-input-background text-white rounded-[5px] text-[12px] font-grotesk" href="/dashboard/inbox/compose">
+			COMPOSE
+		</a>
+	</div>
+	<ReactItem user={user} />
+</MainLayout>

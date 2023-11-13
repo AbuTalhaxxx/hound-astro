@@ -1,0 +1,34 @@
+---
+import MainLayout from '../../components/MainLayout.astro';
+import Add from '../../components/Add.astro';
+import Item from '../../components/Item.astro';
+import '@fontsource-variable/syne';
+
+import { getData } from '../../firebase/firebaseUtils.js';
+
+let emails = null;
+
+if(Astro.cookies.has("user")){
+
+const data = await getData(Astro.cookies.get("user").value);
+
+emails = data.emails;
+
+}
+else {
+	    return Astro.redirect("/login");
+}
+
+---
+
+<MainLayout>
+<Add componentType="EMAIL" />
+{emails.length > 0 ? emails.map((item, index)=>{
+    return <Item active={item.campaignName === "None" ? false : true} index={index+1} componentType="EMAIL" name={item.address} portNumber={item.port} serverAddress={item.server} password={item.password} address={item.address}/>; 
+}):""}
+</MainLayout>
+
+<script>
+
+	
+</script>

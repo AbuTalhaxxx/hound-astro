@@ -1,0 +1,737 @@
+---
+import '@fontsource-variable/syne';
+import 'drawflow/dist/drawflow.min.css';
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content="{Astro.generator}" />
+		<title>Astro</title>
+		<style is:global>
+	
+.drawflow .drawflow-node {
+display:block;
+border-radius: 8px;
+background-color: rgba(186,186,186,0.04);
+width: 200px;
+max-height: 400px;
+border: 1px solid rgba(255, 255, 255, 0.02); 
+padding:0px;
+}
+
+.drawflow .drawflow-node.selected {
+
+background-color: rgba(186,186,186,0.04);
+
+}
+
+.drawflow .replynode .input {
+top: 18px;
+left: -2px;
+width: 3px;
+height:3px;
+rotate: 45deg;
+background-color: #798388;
+border-radius: 0;
+border: none;
+
+}
+
+.drawflow .replynode .output {
+right: -197px;
+top: -75px;
+width: 3px;
+height:3px;
+rotate: 45deg;
+background-color: #798388;
+border-radius: 0;
+border: none;
+}
+
+.drawflow .noreply .output, .drawflow .opened .output {
+right: -197px;
+top: -50px;
+width: 3px;
+height:3px;
+rotate: 45deg;
+background-color: #798388;
+border-radius: 0;
+border: none;
+}
+
+
+.drawflow .spreaded .output {
+right: -197px;
+top: -131px;
+width: 3px;
+height:3px;
+rotate: 45deg;
+background-color: #798388;
+border-radius: 0;
+border: none;
+}
+
+.drawflow .noreply .input, .drawflow .opened .input {
+top: 18px;
+left: -2px;
+width: 3px;
+height:3px;
+rotate: 45deg;
+background-color: #798388;
+border-radius: 0;
+border: none;
+
+}
+
+.drawflow .enode .output {
+right: -197px;
+top: -135px;
+width: 3px;
+height:3px;
+rotate: 45deg;
+background-color: #798388;
+border-radius: 0;
+border: none;
+}
+
+.drawflow .enode .input {
+left: -2px;
+top: 15px;
+width: 3px;
+height:3px;
+rotate: 45deg;
+background-color: #798388;
+border-radius: 0;
+border: none;
+}
+
+.drawflow .drawflow-node .inputs, .drawflow .drawflow-node .outputs {
+	height: 0;
+}
+
+	.drawflow .connection .main-path {
+	stroke-width: 1px;
+	stroke: rgba(255,255,255,0.4);
+}
+
+
+</style>
+	</head>
+<body class={`body relative bg-lighter-black bg-[length:80px_80px] bg-[linear-gradient(to_right,rgba(0,0,0,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.2)_1px,transparent_1px)] min-w-[1200px] min-h-[600px] w-screen h-screen overflow-scroll`}>
+	<div class="absolute z-[2] h-[50px] w-[50px] rounded-[20px] bg-input-background inline-flex flex-row items-center justify-center mt-[15px] ml-[15px] hover:cursor-pointer back-button">
+<svg width="16" height="16" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 7H1M1 7L7 13M1 7L7 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</div>
+<div class="h-full" id="drawflow">
+
+</div>
+    <div class="rounded-[10px] w-[260px] block h-[150px] bg-input-background absolute z-[2] bottom-[90px] left-[50%] ml-[-130px] border-[1px] node-selector hidden border-[rgba(255,255,255,0.02)] backdrop-blur-[17.5px] overflow-scroll scrollbar-hide">
+    	<button class="block email w-[240px] mx-[10px] bg-input-background rounded-[5px] border-[1px] pl-[10px] border-[rgba(255,255,255,0.02)] text-white h-[40px] text-[12px] font-grotesk my-[10px] text-left">EMAIL</button>
+    	<button class="block reply w-[240px] mx-[10px] bg-input-background rounded-[5px] border-[1px] pl-[10px] border-[rgba(255,255,255,0.02)] text-white h-[40px] text-[12px] font-grotesk my-[10px] text-left">REPLY</button>
+    	<button class="block no-reply w-[240px] mx-[10px] h-[30px] bg-input-background rounded-[5px] border-[1px] pl-[10px] border-[rgba(255,255,255,0.02)] text-white h-[40px] text-[12px] font-grotesk my-[10px] text-left">NO REPLY</button>
+    	<button class="block opened w-[240px] mx-[10px] bg-input-background rounded-[5px] border-[1px] pl-[10px] border-[rgba(255,255,255,0.02)] text-white h-[40px] text-[12px] font-grotesk my-[10px] text-left">OPENED</button>
+    	
+    </div>
+	<div class="inline-flex flex-row items-center justify-around w-[260px] text-center left-[50%] ml-[-130px] h-[50px] bg-input-background rounded-[10px] absolute z-[2] bottom-[25px]">
+		<svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="add-node inactive w-[40px] h-[40px] p-[5px] hover:cursor-pointer">
+  <path d="M6.81464 12H12.7352M12.7352 12H18.6557M12.7352 12V18M12.7352 12V6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+		<svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="add-node w-[40px] h-[40px] active hidden hover:cursor-pointer p-[5px] bg-input-background">
+  <path d="M6.81464 12H12.7352M12.7352 12H18.6557M12.7352 12V18M12.7352 12V6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<svg width="20" height="20" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="zoom-in hover:cursor-pointer">
+  <path d="M8.59609 12H12.5431M12.5431 12H16.4901M12.5431 12V16M12.5431 12V8M12.5431 21C11.3769 21 10.222 20.7672 9.14458 20.3149C8.06711 19.8626 7.0881 19.1997 6.26344 18.364C5.43878 17.5282 4.78463 16.5361 4.33833 15.4442C3.89202 14.3522 3.66232 13.1819 3.66232 12C3.66232 10.8181 3.89202 9.64778 4.33833 8.55585C4.78463 7.46392 5.43878 6.47177 6.26344 5.63604C7.0881 4.80031 8.06711 4.13738 9.14458 3.68508C10.222 3.23279 11.3769 3 12.5431 3C14.8984 3 17.1573 3.94821 18.8228 5.63604C20.4883 7.32387 21.4239 9.61305 21.4239 12C21.4239 14.3869 20.4883 16.6761 18.8228 18.364C17.1573 20.0518 14.8984 21 12.5431 21Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="zoom-out hover:cursor-pointer">
+  <path d="M7.93383 12H15.8279M11.8809 21C10.7146 21 9.55979 20.7672 8.48232 20.3149C7.40485 19.8626 6.42584 19.1997 5.60118 18.364C4.77653 17.5282 4.12237 16.5361 3.67607 15.4442C3.22977 14.3522 3.00006 13.1819 3.00006 12C3.00006 10.8181 3.22977 9.64778 3.67607 8.55585C4.12237 7.46392 4.77653 6.47177 5.60118 5.63604C6.42584 4.80031 7.40485 4.13738 8.48232 3.68508C9.55979 3.23279 10.7146 3 11.8809 3C14.2362 3 16.4951 3.94821 18.1605 5.63604C19.826 7.32387 20.7616 9.61305 20.7616 12C20.7616 14.3869 19.826 16.6761 18.1605 18.364C16.4951 20.0518 14.2362 21 11.8809 21Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<button class="save-button bg-header rounded-[10px] text-[12px] font-grotesk h-[30px] w-[70px]">
+	SAVE
+</button>
+	</div>
+</body>
+</html>	
+<script>
+import Drawflow from 'drawflow';
+import { getData, update, isNumber, isValidEmail } from '../../../firebase/firebaseUtils.js';
+import cookies from "js-cookie";
+const user = cookies.get("user");
+const data = await getData(user);
+const currentPath = window.location.pathname;
+const splitted = currentPath.split("/");
+const sequenceName = splitted[splitted.length-1];
+let templates = data.templates.map((t)=>t.name);
+console.log(templates);
+
+let id = document.getElementById("drawflow");
+const editor = new Drawflow(id);
+editor.zoom_max = 1.6;
+editor.zoom_min = 0.5;
+editor.zoom_value = 0.1;
+
+
+const addNodeActive = document.querySelector(".add-node.active");
+const addNodeInactive = document.querySelector(".add-node.inactive");
+const nodeSelector = document.querySelector(".node-selector");
+const zoomIn = document.querySelector(".zoom-in");
+const zoomOut = document.querySelector(".zoom-out");
+const opened = document.querySelector(".opened");
+const noreply = document.querySelector(".no-reply");
+const reply = document.querySelector(".reply");
+const email = document.querySelector(".email");
+const save = document.querySelector(".save-button");
+const backbutton = document.querySelector(".back-button");
+
+backbutton.addEventListener("click",async ()=>{
+
+const exportedData = editor.export();
+let sequences = data.sequences.map((s)=>{
+if(s.name===sequenceName){
+	s.flow = exportedData;
+  s.validity = validateFlow(exportedData);
+}
+
+return s;
+});
+
+await update(user,"sequences", sequences,"e");
+
+history.back();
+
+});
+
+let flow = {};
+
+zoomIn.addEventListener("click",(e)=>{
+
+e.stopPropagation();
+
+editor.zoom_in();
+
+console.log("zoom in");
+
+});
+
+zoomOut.addEventListener("click",(e)=>{
+
+e.stopPropagation();
+
+editor.zoom_out();
+
+console.log("zoom out");
+
+});
+
+addNodeActive.addEventListener("click",()=>{
+addNodeActive.classList.add("hidden");
+addNodeInactive.classList.remove("hidden");
+nodeSelector.classList.add("hidden");
+nodeSelector.classList.remove("block");
+});
+
+addNodeInactive.addEventListener("click",()=>{
+addNodeInactive.classList.add("hidden");
+nodeSelector.classList.remove("hidden");
+nodeSelector.classList.add("block");
+addNodeActive.classList.remove("hidden");
+});
+
+opened.addEventListener("click",(e)=>{
+e.stopPropagation();
+
+let templateOptions = ``;
+
+templates.forEach((t)=>{
+
+let divCode = `
+<div class="option text-white mix-blend-overlay hover:bg-[rgba(186,186,186,0.4)] font-grotesk text-[12px] text-[rgba(255,255,255,0.4)] p-[10px]">
+${t}
+</div>
+`;
+ templateOptions = templateOptions + divCode;
+
+});
+
+let html = `
+<div class="h-full w-full bg-input-background">
+<div class=" w-full h-[35px] font-grotesk text-[12px] text-white pt-[10px] pl-[10px]">OPENED</div>
+<div class="h-[1px] w-full bg-[rgba(255,255,255,0.4)] mix-blend-soft-light "></div>
+<div>
+<img src="/inactive.png" class="inline-block h-[20px] w-[20px] inactive hover:cursor-pointer"/>
+<img src="/active.png" class="hidden h-[20px] w-[20px] active hover:cursor-pointer"/>
+<span class="text-[12px] font-grotesk inline-block mx-[10px] text-white">SEND FOLLOW UP MAIL</span>
+</div>
+<div class="bg-inherit my-[10px] rounded-[8px] relative mx-[10px] hidden flex-row justify-between items-center hover:cursor-pointer template-selector">
+ <span class="inline-block px-[10px] py-[10px] text-white font-grotesk my-[5px] text-[12px] text-[rgba(255,255,255,0.4)] selected-value">TEMPLATE</span>
+ <svg width="15" height="15" viewBox="0 0 20 10" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow inline-block pt-[10px] transition-transform duration-100" style="position: static; margin-bottom: 9px; margin-right: 5px;">
+  <g style="mix-blend-mode:overlay">
+    <path d="M18 1L10 9L2 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
+<div class="hidden absolute z-[2] w-full max-h-[80px] rounded-[8px] overflow-scroll bg-input-background top-[45px] scrollbar-hide template-options">
+${templateOptions}
+</div>
+</div>
+</div>
+`;
+
+editor.addNode("home", 1 , 3 , 150, 300, "opened", {}, html);
+
+
+});
+
+noreply.addEventListener("click",(e)=>{
+e.stopPropagation();
+
+let templateOptions = ``;
+
+templates.forEach((t)=>{
+
+let divCode = `
+<div class="option text-white mix-blend-overlay hover:bg-[rgba(186,186,186,0.4)] font-grotesk text-[12px] text-[rgba(255,255,255,0.4)] p-[10px]">
+${t}
+</div>
+`;
+ templateOptions = templateOptions + divCode;
+
+});
+
+let html = `
+<div class="h-full w-full bg-input-background">
+<div class=" w-full h-[35px] font-grotesk text-[12px] text-white pt-[10px] pl-[10px]">NO REPLY</div>
+<div class="h-[1px] w-full bg-[rgba(255,255,255,0.4)] mix-blend-soft-light "></div>
+<div>
+<img src="/inactive.png" class="inline-block h-[20px] w-[20px] inactive hover:cursor-pointer"/>
+<img src="/active.png" class="hidden h-[20px] w-[20px] active hover:cursor-pointer"/>
+<span class="text-[12px] font-grotesk inline-block mx-[10px] text-white">SEND FOLLOW UP MAIL</span>
+</div>
+<div class="bg-inherit my-[10px] rounded-[8px] relative mx-[10px] hidden flex-row justify-between items-center hover:cursor-pointer template-selector">
+ <span class="inline-block px-[10px] py-[10px] text-white font-grotesk my-[5px] text-[12px] text-[rgba(255,255,255,0.4)] selected-value">TEMPLATE</span>
+ <svg width="15" height="15" viewBox="0 0 20 10" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow inline-block pt-[10px] transition-transform duration-100" style="position: static; margin-bottom: 9px; margin-right: 5px;">
+  <g style="mix-blend-mode:overlay">
+    <path d="M18 1L10 9L2 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
+<div class="hidden absolute z-[2] w-full max-h-[80px] rounded-[8px] overflow-scroll bg-input-background top-[45px] scrollbar-hide template-options">
+${templateOptions}
+</div>
+</div>
+</div>
+`;
+
+editor.addNode("home", 1 , 3 , 150, 300, "noreply", {}, html);
+
+});
+
+reply.addEventListener("click",(e)=>{
+e.stopPropagation();
+
+let html = `
+<div class="h-full w-full bg-input-background">
+<div class=" w-full h-[35px] font-grotesk text-[12px] text-white pt-[10px] pl-[10px]">REPLIED</div>
+<div class="h-[1px] w-full bg-[rgba(255,255,255,0.4)] mix-blend-soft-light "></div>
+<div>
+
+<img src="/inactive.png" class="inline-block h-[20px] w-[20px] inactive-inbox hover:cursor-pointer"/>
+<img src="/active.png" class="hidden h-[20px] w-[20px] active-inbox hover:cursor-pointer"/>
+<span class="text-[12px] font-grotesk inline-block mx-[10px] text-white">SEND TO INBOX</span>
+</div>
+<div>
+
+<img src="/inactive.png" class="inline-block h-[20px] w-[20px] inactive-ai hover:cursor-pointer"/>
+<img src="/active.png" class="h-[20px] w-[20px] active-ai hidden hover:cursor-pointer"/>
+<span class="text-[12px] font-grotesk inline-block mx-[10px] text-white">USE AI</span>
+</div>
+
+</div>
+`;
+
+editor.addNode('home', 1, 0, 150, 300, 'replynode', {}, html);
+
+
+});
+
+email.addEventListener("click",(e)=>{
+e.stopPropagation();
+
+ let templateOptions = ``;
+
+templates.forEach((t)=>{
+
+let divCode = `
+<div class="option text-white mix-blend-overlay hover:bg-[rgba(186,186,186,0.4)] font-grotesk text-[12px] text-[rgba(255,255,255,0.4)] p-[10px]">
+${t}
+</div>
+`;
+ templateOptions = templateOptions + divCode;
+
+});
+
+let html = `
+<div class="h-full w-full bg-input-background">
+<div class=" w-full h-[35px] font-grotesk text-[12px] text-white pt-[10px] pl-[10px]">EMAIL</div>
+<div class="h-[1px] w-full bg-[rgba(255,255,255,0.4)] mix-blend-soft-light "></div>
+<div class="w-full flex flex-col justify-evenly bg-input-background">
+
+<div class="bg-inherit my-[10px] rounded-[8px] relative mx-[10px] flex flex-row justify-between items-center hover:cursor-pointer template-selector">
+ <span class="inline-block px-[10px] py-[10px] text-white font-grotesk my-[5px] text-[12px] text-[rgba(255,255,255,0.4)] selected-value">TEMPLATE</span>
+ <svg width="15" height="15" viewBox="0 0 20 10" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow inline-block pt-[10px] transition-transform duration-100" style="position: static; margin-bottom: 9px; margin-right: 5px;">
+  <g style="mix-blend-mode:overlay">
+    <path d="M18 1L10 9L2 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
+<div class="hidden absolute z-[2] w-full max-h-[80px] rounded-[8px] overflow-scroll bg-input-background top-[45px] scrollbar-hide template-options">
+${templateOptions}
+</div>
+</div>
+<div class="w-full flex flex-row h-[40px] items-center">
+<svg width="20" height="20" viewBox="0 0 32 32" fill="none" style="position: static;" xmlns="http://www.w3.org/2000/svg" class="inactive hover:cursor-pointer mx-[10px] inline-block">
+  <g filter="url(#filter0_d_23_318)">
+    <circle cx="16" cy="16" r="7" fill="#D9D9D9"/>
+  </g>
+  <defs>
+    <filter id="filter0_d_23_318" x="0" y="0" width="32" height="32" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset/>
+      <feGaussianBlur stdDeviation="4.5"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.729167 0 0 0 0 0.729167 0 0 0 0 0.729167 0 0 0 1 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_23_318"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_23_318" result="shape"/>
+    </filter>
+  </defs>
+</svg>
+<svg width="20" height="20" viewBox="0 0 32 32" fill="none" style="position: static;" xmlns="http://www.w3.org/2000/svg" class="mx-[10px] hover:cursor-pointer hidden inline-block active">
+  <g filter="url(#filter0_di_23_298)">
+    <circle cx="16" cy="16" r="7" fill="#FFC960"/>
+  </g>
+  <defs>
+    <filter id="filter0_di_23_298" x="0" y="0" width="32" height="32" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset/>
+      <feGaussianBlur stdDeviation="4.5"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.941667 0 0 0 0 0.247187 0 0 0 0 0.247187 0 0 0 1 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_23_298"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_23_298" result="shape"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset/>
+      <feGaussianBlur stdDeviation="2"/>
+      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.18 0 0 0 0 0 0 0 0 1 0"/>
+      <feBlend mode="normal" in2="shape" result="effect2_innerShadow_23_298"/>
+    </filter>
+  </defs>
+</svg>
+<span class="text-[12px] font-grotesk text-white">USE AI</span>
+</div>
+</div>
+</div>
+`;
+
+
+editor.addNode('home', 1, 3, 150, 300, 'enode', {}, html);
+
+
+
+});
+
+
+editor.on("nodeCreated",(id)=>{
+
+const createdNode = document.getElementById("node-"+id);
+if(createdNode.classList.contains("enode")){
+
+const selectedValue = createdNode.querySelector(".selected-value");
+
+const templateSelector = createdNode.querySelector(".template-selector");
+
+const active = createdNode.querySelector(".active");
+const inactive = createdNode.querySelector(".inactive");
+
+active.addEventListener("click",(eve)=>{
+eve.stopPropagation();
+
+inactive.classList.remove("hidden");
+active.classList.add("hidden");
+
+});
+
+inactive.addEventListener("click",()=>{
+active.classList.remove("hidden");	
+inactive.classList.add("hidden");
+});
+
+templateSelector.addEventListener("click",(e)=>{
+e.stopPropagation();
+
+const arrow = templateSelector.querySelector(".arrow");
+
+if(arrow.classList.contains("rotate-[180deg]")){
+	arrow.classList.remove("rotate-[180deg]");
+}
+else {
+	arrow.classList.add("rotate-[180deg]");
+}
+
+const tempOptions = templateSelector.querySelector(".template-options");
+if(tempOptions.classList.contains("hidden")){
+	tempOptions.classList.remove("hidden");
+}
+else {
+	tempOptions.classList.add("hidden");
+}
+
+const selectableOptions = tempOptions.querySelectorAll(".option");
+
+const spreadedOptions = [...selectableOptions];
+
+spreadedOptions.forEach((o)=>{
+
+o.addEventListener("click",(ev)=>{
+ev.stopPropagation();
+if(selectedValue.innerHTML==="TEMPLATE"){
+selectedValue.innerHTML = ev.target.innerHTML;
+templates = templates.filter((op)=>op!==ev.target.innerHTML);
+tempOptions.removeChild(ev.target);
+}
+else {
+	templates.push(selectedValue.innerHTML);
+	const existingValue = selectedValue.innerHTML;
+	selectedValue.innerHTML = ev.target.innerHTML;
+templates = templates.filter((op)=>op!==ev.target.innerHTML);
+ev.target.innerHTML = existingValue;
+}
+
+});
+
+});
+
+});
+
+}
+else if(createdNode.classList.contains("replynode")){
+
+const activeInbox = createdNode.querySelector(".active-inbox");
+const inactiveInbox = createdNode.querySelector(".inactive-inbox");
+const activeAi = createdNode.querySelector(".active-ai");
+const inactiveAi = createdNode.querySelector(".inactive-ai");
+
+activeInbox.addEventListener("click",(e)=>{
+
+e.stopPropagation();
+
+activeInbox.classList.add("hidden");
+activeInbox.classList.remove("inline-block");
+inactiveInbox.classList.add("inline-block");
+inactiveInbox.classList.remove("hidden");
+
+
+});
+
+inactiveInbox.addEventListener("click",(e)=>{
+e.stopPropagation();
+
+inactiveInbox.classList.add("hidden");
+inactiveInbox.classList.remove("inline-block");
+activeInbox.classList.add("inline-block");
+activeInbox.classList.remove("hidden");
+
+activeAi.classList.add("hidden");
+activeAi.classList.remove("inline-block");
+inactiveAi.classList.add("inline-block");
+inactiveAi.classList.remove("hidden");
+if(createdNode.classList.contains("added")){
+
+editor.removeNodeOutput(id, "output_1");
+editor.removeNodeOutput(id, "output_1");
+editor.removeNodeOutput(id, "output_1");
+createdNode.classList.remove("added");
+}
+
+
+});
+
+inactiveAi.addEventListener("click",(e)=>{
+e.stopPropagation();
+
+inactiveAi.classList.add("hidden");
+inactiveAi.classList.remove("inline-block");
+activeAi.classList.add("inline-block");
+activeAi.classList.remove("hidden");
+
+activeInbox.classList.add("hidden");
+activeInbox.classList.remove("inline-block");
+inactiveInbox.classList.add("inline-block");
+inactiveInbox.classList.remove("hidden");
+if(!createdNode.classList.contains("added")){
+editor.addNodeOutput(id);
+editor.addNodeOutput(id);
+editor.addNodeOutput(id);
+createdNode.classList.add("added");
+}
+
+});
+
+activeAi.addEventListener("click",(e)=>{
+
+e.stopPropagation();
+
+activeAi.classList.add("hidden");
+activeAi.classList.remove("inline-block");
+inactiveAi.classList.add("inline-block");
+inactiveAi.classList.remove("hidden");
+
+
+});
+
+
+
+
+
+}
+else if(createdNode.classList.contains("noreply")|| createdNode.classList.contains("opened")){
+
+const selectedValue = createdNode.querySelector(".selected-value");
+
+const templateSelector = createdNode.querySelector(".template-selector");
+
+const active = createdNode.querySelector(".active");
+const inactive = createdNode.querySelector(".inactive");
+
+active.addEventListener("click",(eve)=>{
+eve.stopPropagation();
+
+inactive.classList.remove("hidden");
+active.classList.add("hidden");
+
+templateSelector.classList.add("hidden");
+templateSelector.classList.remove("flex");
+
+createdNode.classList.remove("spreaded");
+
+});
+
+inactive.addEventListener("click",()=>{
+active.classList.remove("hidden");	
+inactive.classList.add("hidden");
+
+templateSelector.classList.add("flex");
+templateSelector.classList.remove("hidden");
+
+createdNode.classList.add("spreaded");
+
+});
+
+templateSelector.addEventListener("click",(e)=>{
+e.stopPropagation();
+
+const arrow = templateSelector.querySelector(".arrow");
+
+if(arrow.classList.contains("rotate-[180deg]")){
+	arrow.classList.remove("rotate-[180deg]");
+}
+else {
+	arrow.classList.add("rotate-[180deg]");
+}
+
+const tempOptions = templateSelector.querySelector(".template-options");
+if(tempOptions.classList.contains("hidden")){
+	tempOptions.classList.remove("hidden");
+}
+else {
+	tempOptions.classList.add("hidden");
+}
+
+const selectableOptions = tempOptions.querySelectorAll(".option");
+
+const spreadedOptions = [...selectableOptions];
+
+spreadedOptions.forEach((o)=>{
+
+o.addEventListener("click",(ev)=>{
+ev.stopPropagation();
+if(selectedValue.innerHTML==="TEMPLATE"){
+selectedValue.innerHTML = ev.target.innerHTML;
+templates = templates.filter((op)=>op!==ev.target.innerHTML);
+tempOptions.removeChild(ev.target);
+}
+else {
+	templates.push(selectedValue.innerHTML);
+	const existingValue = selectedValue.innerHTML;
+	selectedValue.innerHTML = ev.target.innerHTML;
+templates = templates.filter((op)=>op!==ev.target.innerHTML);
+ev.target.innerHTML = existingValue;
+}
+
+});
+
+});
+
+});
+
+
+}
+
+});
+
+save.addEventListener("click",async (ev)=>{
+ev.stopPropagation();
+
+const validateFlow = (expData)=>{
+
+return false;
+
+};
+
+const exportedData = editor.export();
+
+
+
+let sequences = data.sequences.map((s)=>{
+if(s.name===sequenceName){
+	s.flow = exportedData;
+  s.validity = validateFlow(exportedData);
+}
+
+return s;
+});
+
+await update(user,"sequences", sequences,"e");
+
+});
+
+
+editor.start();
+
+
+const seq = data.sequences.filter((s)=>s.name===sequenceName);
+
+editor.import(seq[0].flow);
+
+
+
+/*
+let id = document.getElementById("drawflow");
+const editor = new Drawflow(id);
+editor.zoom_max = 1.6;
+editor.zoom_min = 0.5;
+editor.zoom_value = 0.1;
+editor.start();
+
+var html = `
+<div class="hello bg-white"><input type="text" df-name></div>
+`;
+var data = { "name": 'jjj' };
+
+editor.addNode('Home', 0, 1, 800, 300, 'github', data, html);
+*/
+
+</script>

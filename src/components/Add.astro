@@ -1,0 +1,725 @@
+---
+import '@fontsource-variable/space-grotesk';
+const componentType = Astro.props.componentType; 
+const sequences = Astro.props.sequences;
+const addresses = Astro.props.addresses;
+const lists = Astro.props.lists;
+---
+<div data-ctype={componentType} class={`add item animate-pulse transition-[max-height] my-[10px] duration-300 w-full bg-input-background max-h-[70px] overflow-hidden rounded-[10px] hover:cursor-pointer`}>
+	<div class="flex flex-row items-center justify-start h-[70px] w-full justify-between">
+		<div class="flex flex-row">
+		<svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" class=" ml-[23px] mix-blend-overlay">
+  <g style="mix-blend-mode:overlay">
+    <path d="M6.55556 11H11M11 11H15.4444M11 11V15.4444M11 11V6.55556M11 21C9.68678 21 8.38642 20.7413 7.17317 20.2388C5.95991 19.7363 4.85752 18.9997 3.92893 18.0711C3.00035 17.1425 2.26375 16.0401 1.7612 14.8268C1.25866 13.6136 1 12.3132 1 11C1 9.68678 1.25866 8.38642 1.7612 7.17317C2.26375 5.95991 3.00035 4.85752 3.92893 3.92893C4.85752 3.00035 5.95991 2.26375 7.17317 1.7612C8.38642 1.25866 9.68678 1 11 1C13.6522 1 16.1957 2.05357 18.0711 3.92893C19.9464 5.8043 21 8.34784 21 11C21 13.6522 19.9464 16.1957 18.0711 18.0711C16.1957 19.9464 13.6522 21 11 21Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
+		<span class="ml-[23px] font-grotesk text-[12px] text-white mix-blend-overlay tracking-widest">
+       {`ADD ${componentType}`}
+		</span>	
+        </div>
+        <button class="add-button bg-header w-[50px] h-[30px] font-grotesk text-black text-[12px] rounded-[10px] mr-[23px] opacity-0 transition-opacity duration-300" >
+        	ADD
+        </button>
+	</div>
+		<div class="w-full main hidden flex-col items-center email mb-[23px]">
+			<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk">
+		<input type="email" class="email-address h-[50px] bg-inherit rounded-[7px] w-full focus:outline-none text-white pl-[15px] mix-blend-overlay" placeholder="EMAIL ADDRESS" minlength="10" maxlength="45" />
+		</div>
+		<div class="w-[96%] flex flex-row items-center justify-between bg-input-background mt-[15px] rounded-[7px] text-[12px] font-grotesk">
+		<input type="password" placeholder="PASSWORD" class="password inline-block h-[50px] bg-inherit mix-blend-overlay rounded-[7px] w-[96%] focus:outline-none  pl-[15px] text-white pr-[15px]" minlength="5" maxlength="20" />
+		<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					height="20"
+					viewBox="0 0 24 24"
+					class="show hidden mix-blend-overlay w-[40px] hover:cursor-pointer pr-5"
+				>
+					<g
+						fill="none"
+						stroke="#fff"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth="2"
+					>
+						<path d="M3.587 13.779c1.78 1.769 4.883 4.22 8.413 4.22 3.53 0 6.634-2.451 8.413-4.22.47-.467.705-.7.854-1.159.107-.327.107-.913 0-1.24-.15-.458-.385-.692-.854-1.159C18.633 8.452 15.531 6 12 6c-3.53 0-6.634 2.452-8.413 4.221-.47.467-.705.7-.854 1.159-.107.327-.107.913 0 1.24.15.458.384.692.854 1.159z"></path>
+						<path d="M10 12a2 2 0 104 0 2 2 0 00-4 0z"></path>
+					</g>
+				</svg>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					height="20"
+					viewBox="0 0 24 24"
+					class="hide inline-block mix-blend-overlay w-[40px] hover:cursor-pointer pr-5"
+				>
+					<path
+						fill="none"
+						stroke="#fff"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						strokeWidth="2"
+						d="M4 4l16 16m-3.5-3.244C15.147 17.485 13.618 18 12 18c-3.53 0-6.634-2.452-8.413-4.221-.47-.467-.705-.7-.854-1.159-.107-.327-.107-.913 0-1.24.15-.459.385-.693.855-1.16.897-.892 2.13-1.956 3.584-2.793M19.5 14.634c.333-.293.638-.582.912-.854l.003-.003c.468-.466.703-.7.852-1.156.107-.327.107-.914 0-1.241-.15-.458-.384-.692-.854-1.159C18.633 8.452 15.53 6 12 6c-.338 0-.671.022-1 .064m2.323 7.436a2 2 0 01-2.762-2.889"
+					></path>
+				</svg>
+			</div>
+				<div class="bg-input-background backdrop-blur-[12.5px] mt-[15px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk">
+		<input type="text" class="server-address h-[50px] bg-inherit rounded-[7px] w-full focus:outline-none text-white pl-[15px] mix-blend-overlay" placeholder="SERVER ADDRESS" minlength="10" maxlength="45" />
+		</div>
+			<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] mt-[15px] text-[12px] pr-[15px] font-grotesk">
+		<input type="text" class="port-number h-[50px] bg-inherit rounded-[7px] w-full focus:outline-none text-white pl-[15px] mix-blend-overlay" placeholder="PORT NUMBER" minlength="1" maxlength="5" />
+		</div>
+	</div>
+		<div class="w-full main hidden flex-col items-center template mb-[23px]">
+				<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk">
+		<input type="text" class="template-name h-[50px] bg-inherit rounded-[7px] w-full focus:outline-none text-white pl-[15px] mix-blend-overlay" placeholder="TEMPLATE NAME" minlength="10" maxlength="45" />
+		</div>
+		<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk mt-[15px]">
+		<input type="text" class="email-subject h-[50px] bg-inherit rounded-[7px] w-full focus:outline-none text-white pl-[15px] mix-blend-overlay" placeholder="EMAIL SUBJECT" minlength="10" maxlength="100" />
+		</div>
+		<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk mt-[15px]">
+    <textarea rows="7" cols="50"
+                className={` content resize-none w-[100%] p-[15px] h-[126px] rounded-[7px] bg-inherit outline-none  text-[12px] mix-blend-overlay text-white`}
+                placeholder="CONTENT"
+                maxLength="3000"
+                minlength="20" 
+                spellCheck={false}
+              />
+		</div>	
+		</div>
+		<div class="w-full main hidden flex-col items-center list mb-[23px]">
+        	<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk">
+		<input type="text" class="list-name h-[50px] bg-inherit rounded-[7px] w-full focus:outline-none text-white pl-[15px] mix-blend-overlay" placeholder="LIST NAME" minlength="5" maxlength="45" />
+		</div>
+		</div>
+		<div class="w-full main hidden flex-col items-center lead mb-[23px]">
+				<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk">
+		<input type="text" class="fullname h-[50px] bg-inherit rounded-[7px] w-full focus:outline-none text-white pl-[15px] mix-blend-overlay" placeholder="FULLNAME" minlength="10" maxlength="45" />
+		</div>
+		<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk mt-[15px]">
+		<input type="email" class="lead-email h-[50px] bg-inherit rounded-[7px] w-full focus:outline-none text-white pl-[15px] mix-blend-overlay" placeholder="EMAIL" minlength="10" maxlength="100" />
+		</div>
+		<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk mt-[15px]">
+    <textarea rows="7" cols="50"
+                className={`description resize-none w-[100%] p-[15px] h-[126px] rounded-[7px] bg-inherit outline-none  text-[12px] mix-blend-overlay text-white`}
+                placeholder="DESCRIPTION"
+                maxLength="3000"
+                minlength="20" 
+                spellCheck={false}
+              />
+		</div>	
+		</div>
+		<div class="w-full main hidden flex-col items-center sequence mb-[23px]">
+        	<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk">
+		<input type="text" class="sequence-name h-[50px] bg-inherit rounded-[7px] w-full focus:outline-none text-white pl-[15px] mix-blend-overlay" placeholder="SEQUENCE NAME" minlength="5" maxlength="45" />
+		</div>	
+</div>
+<div class="w-full main hidden flex-col items-center campaign mb-[23px]">
+			<div class="bg-input-background backdrop-blur-[12.5px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk">
+		<input type="text" class="campaign-name h-[50px] bg-inherit rounded-[7px] w-full focus:outline-none text-white pl-[15px] mix-blend-overlay" placeholder="CAMPAIGN NAME" minlength="5" maxlength="45" />
+		</div>
+		<div class="w-[96%] flex flex-row items-center justify-between bg-input-background mt-[15px] rounded-[7px] text-[12px] font-grotesk">
+		<input type="text" placeholder="INTERVAL" class="interval inline-block h-[50px] bg-inherit mix-blend-overlay rounded-[7px] w-[96%] focus:outline-none  pl-[15px] text-white pr-[15px]" minlength="5" maxlength="20" />
+			</div>
+				<div class="bg-input-background seq-con backdrop-blur-[12.5px] max-h-[50px] transition-[max-height] duration-300 mt-[15px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk">
+		    <div class="w-full h-[50px] template-selector rounded-[7px] flex flex-row justify-between items-center">
+		    	<span class="pl-[15px] text-white mix-blend-overlay seq-span">SEQUENCE</span>
+		    	<img src="/chevdown.png" class="h-[12px] w-[24px] transition-transform origin-center seq-chev duration-300 mix-blend-overlay"/>
+		    </div>
+		    <div class="template-options hidden max-h-[180px] overflow-scroll rounded-b-[7px] scrollbar-hide">
+		    	{sequences ? sequences.map((m,i)=>{
+		    		if(i===sequences.length-1){
+                    return (<div class={`option-${i} flex flex-row items-center w-full h-[50px] border-t-[1px] hover:opacity-10 border-[#BABABA0A]`}>
+                    <span class="text-[12px] font-grotesk text-white pl-[15px] mix-blend-overlay text-white">{m}</span>
+                    </div>);
+                }
+                    return (<div class={`option-${i} flex flex-row items-center w-full h-[50px] border-t-[1px] hover:opacity-10 border-b-[1px] border-[#BABABA0A]`}>
+                    <span class="text-[12px] font-grotesk text-white pl-[15px] mix-blend-overlay text-white">{m}</span>
+                    </div>);
+		    	}):""}
+		    </div>
+		</div>
+			<div class="bg-input-background email-con backdrop-blur-[12.5px] max-h-[50px] transition-[max-height] duration-300 mt-[15px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk">
+		    <div class="w-full h-[50px] email-selector rounded-[7px] flex flex-row justify-between items-center">
+		    	<span class="pl-[15px] text-white mix-blend-overlay email-span">EMAIL</span>
+		    	<img src="/chevdown.png" class="h-[12px] w-[24px] transition-transform origin-center email-chev duration-300 mix-blend-overlay"/>
+		    </div>
+		    <div class="email-options hidden max-h-[180px] overflow-scroll rounded-b-[7px] scrollbar-hide">
+		    	{addresses ? addresses.map((m,i)=>{
+		    		if(i===addresses.length-1){
+                    return (<div class={`option-${i} flex flex-row items-center w-full h-[50px] border-t-[1px] hover:opacity-10 border-[#BABABA0A]`}>
+                    <span class="text-[12px] font-grotesk text-white pl-[15px] mix-blend-overlay text-white">{m}</span>
+                    </div>);
+                }
+                    return (<div class={`option-${i} flex flex-row items-center w-full h-[50px] border-t-[1px] hover:opacity-10 border-b-[1px] border-[#BABABA0A]`}>
+                    <span class="text-[12px] font-grotesk text-white pl-[15px] mix-blend-overlay text-white">{m}</span>
+                    </div>);
+		    	}):""}
+		    </div>
+		</div>
+		<div class="bg-input-background list-con backdrop-blur-[12.5px] max-h-[50px] transition-[max-height] duration-300 mt-[15px] rounded-[7px] w-[96%] pr-[15px] text-[12px] font-grotesk">
+		    <div class="w-full h-[50px] list-selector rounded-[7px] flex flex-row justify-between items-center">
+		    	<span class="pl-[15px] text-white mix-blend-overlay list-span">LIST</span>
+		    	<img src="/chevdown.png" class="h-[12px] w-[24px] transition-transform origin-center list-chev duration-300 mix-blend-overlay"/>
+		    </div>
+		    <div class="list-options hidden max-h-[180px] overflow-scroll rounded-b-[7px] scrollbar-hide">
+		    	{lists ? lists.map((m,i)=>{
+		    		if(i===lists.length-1){
+                    return (<div class={`option-${i} flex flex-row items-center w-full h-[50px] border-t-[1px] hover:opacity-10 border-[#BABABA0A]`}>
+                    <span class="text-[12px] font-grotesk text-white pl-[15px] mix-blend-overlay text-white">{m}</span>
+                    </div>);
+                }
+                    return (<div class={`option-${i} flex flex-row items-center w-full h-[50px] border-t-[1px] hover:opacity-10 border-b-[1px] border-[#BABABA0A]`}>
+                    <span class="text-[12px] font-grotesk text-white pl-[15px] mix-blend-overlay text-white">{m}</span>
+                    </div>);
+		    	}):""}
+		    </div>
+		</div>
+<script>
+	
+import { getData, update, isNumber, isValidEmail } from '../firebase/firebaseUtils.js';
+import cookies from "js-cookie";
+
+const user = cookies.get("user");
+const data = await getData(user);
+const currentPath = window.location.pathname;
+const splitted = currentPath.split("/");
+const listName = splitted[splitted.length-1];
+
+const setUp = async ()=>{
+
+const items = document.querySelectorAll(".item");
+const allItems = [...items].filter((e,i)=>!e.classList.contains("add"));
+const add = document.querySelector(".add");
+let addButton = document.querySelector(".add-button");
+let contentArea = null;
+let mainContainer = null;
+const componentType = add.dataset.ctype;
+switch(componentType){
+case "EMAIL":
+	  mainContainer = add.querySelector(".main.email");
+	  break;
+case "TEMPLATE":
+	  mainContainer = add.querySelector(".main.template");
+	  break;
+case "LIST":
+    mainContainer = add.querySelector(".main.list");
+    break;
+case "LEAD":
+    mainContainer = add.querySelector(".main.lead");    	  
+    break;
+case "SEQUENCE":
+	 mainContainer = add.querySelector(".main.sequence");    	  
+    break;
+case "CAMPAIGN":
+	 mainContainer = add.querySelector(".main.campaign");    	  
+    break;
+default:
+   break;    
+}
+const allInput = add.querySelectorAll("input");
+
+console.log("here one");
+
+if(componentType==="EMAIL"){
+	const show = add.querySelector(".show");
+	const hide = add.querySelector(".hide");
+	const password = add.querySelector(".password")
+	show.addEventListener('click',(event)=>{
+		event.stopPropagation();
+	show.classList.remove("inline-block");
+	show.classList.add("hidden");
+	hide.classList.add("inline-block");
+	hide.classList.remove("hidden");
+	password.type="password";
+});
+
+hide.addEventListener('click',()=>{
+event.stopPropagation();
+hide.classList.remove("inline-block");
+hide.classList.add("hidden");
+show.classList.add("inline-block");
+show.classList.remove("hidden");
+password.type="text";
+});
+}
+else if(componentType==="TEMPLATE"){
+    contentArea = add.querySelector(".content");
+	contentArea.addEventListener("click",(e)=>{
+  e.stopPropagation();
+	});
+}
+else if(componentType==="LEAD"){
+	console.log("about to add listener");
+	 contentArea = add.querySelector(".description");
+	contentArea.addEventListener("click",(e)=>{
+  console.log("inside the textarea");
+  e.stopPropagation();
+
+	});
+}
+else if(componentType==="CAMPAIGN"){
+const seqSpan = mainContainer.querySelector(".seq-span");
+const con = mainContainer.querySelector(".seq-con");
+const emailSpan = mainContainer.querySelector(".email-span");
+const emailCon = mainContainer.querySelector(".email-con");
+const listSpan = mainContainer.querySelector(".list-span");
+const listCon = mainContainer.querySelector(".list-con");
+const templateSelector = mainContainer.querySelector(".template-selector");
+const options = mainContainer.querySelector('.template-options');
+const emailSelector = mainContainer.querySelector(".email-selector");
+const emailOptions = mainContainer.querySelector('.email-options');
+const listSelector = mainContainer.querySelector(".list-selector");
+const listOptions = mainContainer.querySelector('.list-options');
+const chev = mainContainer.querySelector(".seq-chev");
+const emailChev = mainContainer.querySelector(".email-chev");
+const listChev = mainContainer.querySelector(".list-chev");
+let selectables = [];
+let emailSelectables = [];
+let listSelectables = [];
+for(let n=0;n<=data.sequences.length-1;n++){
+	const optionName = ".option-"+n;
+	const select = options.querySelector(optionName);
+	selectables.push(select);
+}
+templateSelector.addEventListener("click",(e)=>{
+e.stopPropagation();
+if(con.classList.contains('max-h-[50px]')){
+	con.classList.remove('max-h-[50px]');
+	con.classList.add("max-h-[500px]");
+	options.classList.remove("hidden");
+	chev.classList.add("rotate-180");
+}
+else {
+	con.classList.remove('max-h-[500px]');
+	con.classList.add("max-h-[50px]");
+	options.classList.add("hidden");
+	chev.classList.remove("rotate-180");
+}
+
+});
+
+if(selectables.length>0){
+	selectables.forEach((each)=>{
+    each.addEventListener("click",(ev)=>{
+    ev.stopPropagation();
+    const selectedSpan = ev.target.querySelector("span");
+    const existingValue = seqSpan.innerHTML;
+    const selectedValue = selectedSpan.innerHTML;
+    if(seqSpan.innerHTML==="SEQUENCE"){
+
+      selectables = selectables.filter((s)=>s.innerHTML!==selectedValue);
+    options.removeChild(ev.target);
+    seqSpan.innerHTML = selectedValue;
+    }
+    else {
+     console.log("value is not SEQUENCE");
+    selectedSpan.innerHTML = existingValue;
+    seqSpan.innerHTML = selectedValue;
+    
+    }
+
+   
+    
+    con.classList.remove('max-h-[500px]');
+	con.classList.add("max-h-[50px]");
+	options.classList.add("hidden");
+	chev.classList.remove("rotate-180"); 
+    });
+	});
+}
+
+for(let n=0;n<=data.emails.length-1;n++){
+	const optionName = ".option-"+n;
+	const select = emailOptions.querySelector(optionName);
+	emailSelectables.push(select);
+}
+
+emailSelector.addEventListener("click",(e)=>{
+e.stopPropagation();
+if(emailCon.classList.contains('max-h-[50px]')){
+	emailCon.classList.remove('max-h-[50px]');
+	emailCon.classList.add("max-h-[500px]");
+	emailOptions.classList.remove("hidden");
+	emailChev.classList.add("rotate-180");
+}
+else {
+	emailCon.classList.remove('max-h-[500px]');
+	emailCon.classList.add("max-h-[50px]");
+	emailOptions.classList.add("hidden");
+	emailChev.classList.remove("rotate-180");
+}
+
+});
+
+if(emailSelectables.length>0){
+	console.log(emailSelectables);
+	emailSelectables.forEach((each)=>{
+    each.addEventListener("click",(ev)=>{
+    ev.stopPropagation();
+    const selectedSpan = ev.target.querySelector("span");
+    const existingValue = emailSpan.innerHTML;
+    const selectedValue = selectedSpan.innerHTML;
+    if(emailSpan.innerHTML==="EMAIL"){
+
+      emailSelectables = emailSelectables.filter((s)=>s.innerHTML!==selectedValue);
+    emailOptions.removeChild(ev.target);
+    emailSpan.innerHTML = selectedValue;
+    }
+    else {
+     console.log("value is not SEQUENCE");
+    selectedSpan.innerHTML = existingValue;
+    emailSpan.innerHTML = selectedValue;
+    
+    }
+
+   
+    
+    emailCon.classList.remove('max-h-[500px]');
+	emailCon.classList.add("max-h-[50px]");
+	emailOptions.classList.add("hidden");
+	emailChev.classList.remove("rotate-180"); 
+    });
+	});
+}
+
+for(let n=0;n<=data.lists.length-1;n++){
+	const optionName = ".option-"+n;
+	const select = listOptions.querySelector(optionName);
+	listSelectables.push(select);
+}
+
+listSelector.addEventListener("click",(e)=>{
+e.stopPropagation();
+if(listCon.classList.contains('max-h-[50px]')){
+	listCon.classList.remove('max-h-[50px]');
+	listCon.classList.add("max-h-[500px]");
+	listOptions.classList.remove("hidden");
+	listChev.classList.add("rotate-180");
+}
+else {
+	listCon.classList.remove('max-h-[500px]');
+	listCon.classList.add("max-h-[50px]");
+	listOptions.classList.add("hidden");
+	listChev.classList.remove("rotate-180");
+}
+
+});
+
+if(listSelectables.length>0){
+	console.log(listSelectables);
+	listSelectables.forEach((each)=>{
+    each.addEventListener("click",(ev)=>{
+    ev.stopPropagation();
+    const selectedSpan = ev.target.querySelector("span");
+    const existingValue = listSpan.innerHTML;
+    const selectedValue = selectedSpan.innerHTML;
+    if(listSpan.innerHTML==="LIST"){
+
+      listSelectables = listSelectables.filter((s)=>s.innerHTML!==selectedValue);
+    listOptions.removeChild(ev.target);
+    listSpan.innerHTML = selectedValue;
+    }
+    else {
+     console.log("value is not SEQUENCE");
+    selectedSpan.innerHTML = existingValue;
+    listSpan.innerHTML = selectedValue;
+    
+    }
+
+   
+    
+    listCon.classList.remove('max-h-[500px]');
+	listCon.classList.add("max-h-[50px]");
+	listOptions.classList.add("hidden");
+	listChev.classList.remove("rotate-180"); 
+    });
+	});
+}
+
+
+}
+
+allInput.forEach((e)=>{
+
+e.addEventListener("click",(event)=>{
+
+event.stopPropagation();
+
+});
+
+});
+
+const close = ()=>{
+	console.log(allItems);
+allItems.forEach((i)=>{
+
+const componentClass = componentType === "EMAIL" ? "email":(componentType === "TEMPLATE"?"template":(componentType === "LIST"?"list":(componentType === "LEAD"?"lead":(componentType==="SEQUENCE"?"sequence":(componentType==="CAMPAIGN"?"campaign":"")))));
+
+const itemContainer = i.querySelector(".main."+componentClass);
+itemContainer.classList.add("hidden");
+itemContainer.classList.remove("flex");
+i.classList.add('max-h-[70px]');
+	i.classList.remove('max-h-[500px]');
+if(i.hasAttribute("data-open")){
+i.removeAttribute('data-open');
+}
+
+
+});
+};
+
+console.log("here");
+
+const onClick = async ()=>{
+	console.log("add clicked");
+close();
+if(add.hasAttribute('data-open')){
+	mainContainer.classList.add("hidden");
+	mainContainer.classList.remove("flex");
+	add.classList.add('max-h-[70px]');
+	add.classList.remove('max-h-[500px]');
+	add.removeAttribute('data-open');
+	addButton.classList.add('opacity-0');
+	addButton.classList.remove('opacity-100');
+}
+else {
+	mainContainer.classList.add("flex");
+	mainContainer.classList.remove("hidden");
+	add.classList.add('max-h-[500px]');
+	add.classList.remove('max-h-[70px]');
+	add.setAttribute('data-open','');
+  addButton.classList.add('opacity-100');
+  addButton.classList.remove('opacity-0');
+
+}
+
+};
+console.log(add);
+add.addEventListener("click",onClick);
+
+addButton.addEventListener("click",async (e)=>{
+
+e.stopPropagation();
+
+
+
+if(componentType==="EMAIL"){
+    const address = add.querySelector(".email-address").value;
+    const password = add.querySelector(".password").value;
+    const serverAddress = add.querySelector(".server-address").value;
+    const portNumber = add.querySelector(".port-number").value;
+if(address && password && serverAddress && portNumber){
+   if(isValidEmail(address)&&isNumber(portNumber)){
+   	let emails = data.emails;
+   	if(emails.length>0){
+   	let fileteredEmails = emails.filter((em)=>em.address===address);
+   	if(fileteredEmails.length!==0){
+   		return;
+   	}
+   }
+   	await update(user,"emails",{
+   		campaignName: "None",
+   		address: address,
+   		server:serverAddress,
+   		password:password,
+   		port:portNumber,
+   	},"a");
+
+   	window.location.reload();
+   	
+   }
+
+}
+else {
+return;
+}
+
+}
+else if(componentType==="TEMPLATE"){
+
+    const name = add.querySelector(".template-name").value;
+    const subject = add.querySelector(".email-subject").value;
+    const content = add.querySelector(".content").value;
+if(name && subject && content){
+ 
+   	let templates = data.templates;
+   	if(templates.length>0){
+   	let fileteredTemplates = templates.filter((em)=>em.name===name);
+   	if(fileteredTemplates.length!==0){
+   		return;
+   	}
+    }
+   	await update(user,"templates",{
+   		campaignName: "None",
+   		name: name,
+   		subject:subject,
+   	    content:content,
+   	},"a");
+
+   	window.location.reload();
+   	
+   
+
+}
+else {
+return;
+}
+
+
+}
+else if(componentType==="LIST"){
+const listName = add.querySelector(".list-name").value;
+
+if(listName){
+
+let lists = data.lists;
+if(lists.length>0){
+
+	let fileteredLists = lists.filter((em)=>em.listName===listName);
+   	if(fileteredLists.length!==0){
+   		return;
+   	}
+}
+
+await update(user,"lists",{
+   		campaignName: "None",
+   		listName: listName,
+   		leads:[],
+   	},"a");
+
+   	window.location.reload();
+
+}
+else {
+	return;
+}
+
+}
+else if(componentType==="LEAD"){
+
+ const fullname = add.querySelector(".fullname").value;
+    const leadEmail = add.querySelector(".lead-email").value;
+    const description = add.querySelector(".description").value;
+
+if(fullname && leadEmail && description){
+
+if(isValidEmail(leadEmail)){
+
+let lists = data.lists.map((l)=>{
+
+if(l.listName===listName){
+l.leads.push({
+campaignName:"None",
+fullname:fullname,
+email:leadEmail,
+description:description,
+});
+
+return l;
+}
+
+
+});
+
+await update(user,"lists",lists,"e");
+
+window.location.reload();
+
+
+}
+
+
+}
+	else {
+		return;
+	}
+
+}
+else if(componentType==="SEQUENCE"){
+const sequenceName = add.querySelector(".sequence-name").value;
+
+if(sequenceName){
+
+let sequences = data.sequences;
+if(sequences.length>0){
+
+	let fileteredSequences = sequences.filter((em)=>em.name===sequenceName);
+   	if(fileteredSequences.length!==0){
+   		return;
+   	}
+}
+
+await update(user,"sequences",{
+   		validity: false,
+   		name: sequenceName,
+   		flow:{},
+   	},"a");
+
+   	window.location.reload();
+
+}
+else {
+	return;
+}
+
+}
+else if(componentType==="CAMPAIGN"){
+
+const campaignName = add.querySelector(".campaign-name").value;
+const interval = add.querySelector(".interval").value;
+const sequence = add.querySelector(".seq-span").innerHTML;
+const email = add.querySelector(".email-span").innerHTML;
+const list = add.querySelector(".list-span").innerHTML;
+
+console.log("here at the starting of campaign");
+
+if(isNumber(interval)&&campaignName&&email&&list&&sequence&&sequence!=="SEQUENCE"&&list!=="LIST"&&email!=="EMAIL"){
+	let campaigns = data.campaigns;
+
+    if(campaigns.length>0){
+
+	let fileteredCampaigns = campaigns.filter((em)=>em.name===campaignName);
+   	if(fileteredCampaigns.length!==0){
+   		return;
+   	   }
+    }
+    console.log("updating");
+    await update(user,"campaigns",{
+   		name: campaignName,
+   		sequence: sequence,
+   		list: list,
+   		email: email,
+   		interval: interval,
+   		status:false,
+   	},"a");
+
+   	window.location.reload();
+
+
+}
+else {
+	return;
+}
+
+}
+
+mainContainer.classList.add("hidden");
+	mainContainer.classList.remove("flex");
+	add.classList.add('max-h-[70px]');
+	add.classList.remove('max-h-[500px]');
+	add.removeAttribute('data-open');
+	addButton.classList.add('opacity-0');
+	addButton.classList.remove('opacity-100');
+
+});
+
+add.classList.remove("animate-pulse");
+
+};
+
+setUp();
+
+document.addEventListener('astro:page-load',setUp,{once:false});
+
+
+</script>

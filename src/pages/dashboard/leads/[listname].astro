@@ -1,0 +1,35 @@
+---
+import MainLayout from '../../../components/MainLayout.astro';
+import Add from '../../../components/Add.astro';
+import Item from '../../../components/Item.astro';
+import '@fontsource-variable/syne';
+import { getData } from '../../../firebase/firebaseUtils.js';
+
+const listName = Astro.params.listname;
+
+let leads = null;
+
+if(Astro.cookies.has("user")){
+
+const data = await getData(Astro.cookies.get("user").value);
+
+const lists = data.lists;
+
+const filteredLists = lists.filter((l)=>l.listName===listName);
+if(filteredLists.length>0){
+	leads = filteredLists[0].leads;
+}
+
+}
+else {
+	    return Astro.redirect("/login");
+}
+
+
+---
+<MainLayout>
+<Add componentType="LEAD" />
+{leads?.length > 0 ? leads.map((item, index)=>{
+    return <Item active={item.campaignName === "None" ? false : true} index={index+1} componentType="LEAD" name={item.fullname} email={item.email} description={item.description}/>; 
+}):""}
+</MainLayout>

@@ -1,0 +1,29 @@
+---
+import MainLayout from '../../../components/MainLayout.astro';
+import Add from '../../../components/Add.astro';
+import Item from '../../../components/Item.astro';
+import '@fontsource-variable/syne';
+import { getData } from '../../../firebase/firebaseUtils.js';
+
+let sequences = null;
+
+if(Astro.cookies.has("user")){
+
+const data = await getData(Astro.cookies.get("user").value);
+
+sequences = data.sequences;
+
+}
+else {
+	    return Astro.redirect("/login");
+}
+
+
+---
+
+<MainLayout>
+	<Add componentType="SEQUENCE" />
+{sequences.length > 0 ? sequences.map((item, index)=>{
+    return <Item active={item.validity ? false : true} index={index+1} componentType="SEQUENCE" name={item.name} />; 
+}):""}
+</MainLayout> 

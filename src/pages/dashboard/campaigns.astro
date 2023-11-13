@@ -1,0 +1,32 @@
+---
+import MainLayout from '../../components/MainLayout.astro';
+import Add from '../../components/Add.astro';
+import Item from '../../components/Item.astro';
+import '@fontsource-variable/syne';
+
+import { getData } from '../../firebase/firebaseUtils.js';
+let campaigns = null;
+let sequences = null;
+let lists = null;
+let addresses = null;
+
+if(Astro.cookies.has("user")){
+
+const data = await getData(Astro.cookies.get("user").value);
+campaigns = data.campaigns;
+sequences = data.sequences.map((s)=>s.name);
+lists = data.lists.map((s)=>s.listName);
+addresses = data.emails.map((s)=>s.address);
+}
+else {
+	    return Astro.redirect("/login");
+}
+
+---
+<MainLayout>
+<Add componentType="CAMPAIGN" sequences={sequences} lists={lists} addresses={addresses}/>
+{campaigns.length > 0 ? campaigns.map((item, index)=>{
+    return <Item addresses={addresses} lists={lists} sequences={sequences} active={item.status} index={index+1} componentType="CAMPAIGN" name={item.name} email={item.email} sequence={item.sequence} list={item.list} interval={item.interval}/>; 
+}):""}
+</MainLayout>
+

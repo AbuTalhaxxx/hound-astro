@@ -1,0 +1,26 @@
+---
+import MainLayout from '../../../components/MainLayout.astro';
+import Add from '../../../components/Add.astro';
+import '@fontsource-variable/syne';
+import Item from '../../../components/Item.astro';
+import { getData } from '../../../firebase/firebaseUtils.js';
+
+let lists = null;
+
+if(Astro.cookies.has("user")){
+
+const data = await getData(Astro.cookies.get("user").value);
+
+lists = data.lists;
+
+}
+else {
+	    return Astro.redirect("/login");
+}
+---
+<MainLayout>
+<Add componentType="LIST"/>
+{lists.length > 0 ? lists.map((item, index)=>{
+    return <Item active={item.campaignName === "None" ? false : true} index={index+1} componentType="LIST" name={item.listName}/>; 
+}):""}
+</MainLayout>
