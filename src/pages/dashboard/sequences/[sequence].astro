@@ -66,7 +66,7 @@ border: none;
 
 .drawflow .spreaded .output {
 right: -197px;
-top: -131px;
+top: -200px;
 width: 3px;
 height:3px;
 rotate: 45deg;
@@ -87,9 +87,9 @@ border: none;
 
 }
 
-.drawflow .enode .output {
-right: -197px;
-top: -135px;
+.drawflow .end .input {
+top: 18px;
+left: -2px;
 width: 3px;
 height:3px;
 rotate: 45deg;
@@ -97,6 +97,29 @@ background-color: #798388;
 border-radius: 0;
 border: none;
 }
+
+.drawflow .enode .output {
+right: -197px;
+top: -195px;
+width: 3px;
+height:3px;
+rotate: 45deg;
+background-color: #798388;
+border-radius: 0;
+border: none;
+}
+
+.drawflow .start .output {
+right: -197px;
+top: -21px;
+width: 3px;
+height:3px;
+rotate: 45deg;
+background-color: #798388;
+border-radius: 0;
+border: none;
+}
+
 
 .drawflow .enode .input {
 left: -2px;
@@ -135,7 +158,8 @@ border: none;
     	<button class="block reply w-[240px] mx-[10px] bg-input-background rounded-[5px] border-[1px] pl-[10px] border-[rgba(255,255,255,0.02)] text-white h-[40px] text-[12px] font-grotesk my-[10px] text-left">REPLY</button>
     	<button class="block no-reply w-[240px] mx-[10px] h-[30px] bg-input-background rounded-[5px] border-[1px] pl-[10px] border-[rgba(255,255,255,0.02)] text-white h-[40px] text-[12px] font-grotesk my-[10px] text-left">NO REPLY</button>
     	<button class="block opened w-[240px] mx-[10px] bg-input-background rounded-[5px] border-[1px] pl-[10px] border-[rgba(255,255,255,0.02)] text-white h-[40px] text-[12px] font-grotesk my-[10px] text-left">OPENED</button>
-    	
+    	<button class="block startnode w-[240px] mx-[10px] bg-input-background rounded-[5px] border-[1px] pl-[10px] border-[rgba(255,255,255,0.02)] text-white h-[40px] text-[12px] font-grotesk my-[10px] text-left">START</button>
+      <button class="block endnode w-[240px] mx-[10px] bg-input-background rounded-[5px] border-[1px] pl-[10px] border-[rgba(255,255,255,0.02)] text-white h-[40px] text-[12px] font-grotesk my-[10px] text-left">END</button>
     </div>
 	<div class="inline-flex flex-row items-center justify-around w-[260px] text-center left-[50%] ml-[-130px] h-[50px] bg-input-background rounded-[10px] absolute z-[2] bottom-[25px]">
 		<svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="add-node inactive w-[40px] h-[40px] p-[5px] hover:cursor-pointer">
@@ -166,7 +190,6 @@ const currentPath = window.location.pathname;
 const splitted = currentPath.split("/");
 const sequenceName = splitted[splitted.length-1];
 let templates = data.templates.map((t)=>t.name);
-console.log(templates);
 
 let id = document.getElementById("drawflow");
 const editor = new Drawflow(id);
@@ -174,6 +197,13 @@ editor.zoom_max = 1.6;
 editor.zoom_min = 0.5;
 editor.zoom_value = 0.1;
 
+let metadata = {};
+
+metadata = data.sequences.map((s)=>s.name===sequenceName)[0].metadata;
+
+if(metadata===undefined){
+  metadata={};
+}
 
 const addNodeActive = document.querySelector(".add-node.active");
 const addNodeInactive = document.querySelector(".add-node.inactive");
@@ -184,9 +214,15 @@ const opened = document.querySelector(".opened");
 const noreply = document.querySelector(".no-reply");
 const reply = document.querySelector(".reply");
 const email = document.querySelector(".email");
+const start = document.querySelector(".startnode");
+const end = document.querySelector(".endnode");
 const save = document.querySelector(".save-button");
 const backbutton = document.querySelector(".back-button");
+const validateFlow = (expData)=>{
 
+return false;
+
+};
 backbutton.addEventListener("click",async ()=>{
 
 const exportedData = editor.export();
@@ -194,6 +230,7 @@ let sequences = data.sequences.map((s)=>{
 if(s.name===sequenceName){
 	s.flow = exportedData;
   s.validity = validateFlow(exportedData);
+  s.metadata = metadata;
 }
 
 return s;
@@ -277,6 +314,7 @@ let html = `
 ${templateOptions}
 </div>
 </div>
+<input type="text" class="w-[85%] mx-[15px] px-[5px] text-[11px] hidden font-grotesk rounded-[5px] outline-none h-[30px] my-[15px] bg-input-background mix-blend-overlay text-white" placeholder="Waiting time"/>
 </div>
 `;
 
@@ -320,7 +358,9 @@ let html = `
 <div class="hidden absolute z-[2] w-full max-h-[80px] rounded-[8px] overflow-scroll bg-input-background top-[45px] scrollbar-hide template-options">
 ${templateOptions}
 </div>
+
 </div>
+<input type="text" class="w-[85%] mx-[15px] px-[5px] text-[11px] hidden font-grotesk rounded-[5px] outline-none h-[30px] my-[15px] bg-input-background mix-blend-overlay text-white" placeholder="Waiting time"/>
 </div>
 `;
 
@@ -431,8 +471,11 @@ ${templateOptions}
   </defs>
 </svg>
 <span class="text-[12px] font-grotesk text-white">USE AI</span>
+
 </div>
+<input type="text" class="w-[85%] mx-[15px] px-[5px] text-[11px] font-grotesk rounded-[5px] outline-none h-[30px] my-[15px] bg-input-background mix-blend-overlay text-white" placeholder="Waiting time"/>
 </div>
+
 </div>
 `;
 
@@ -443,11 +486,108 @@ editor.addNode('home', 1, 3, 150, 300, 'enode', {}, html);
 
 });
 
+start.addEventListener("click",(e)=>{
+
+e.stopPropagation();
+
+let html = `
+<div class="h-full w-full bg-input-background">
+<h1 class="font-grotesk text-white text-center text-[25px]">START</h1>
+</div>
+`;
+
+editor.addNode('home', 0, 1, 150, 300, 'start', {}, html);
+
+});
+
+end.addEventListener("click",(e)=>{
+
+e.stopPropagation();
+
+let html = `
+<div class="h-full w-full bg-input-background">
+<h1 class="font-grotesk text-white text-center text-[25px]">END</h1>
+</div>
+`;
+
+editor.addNode('home', 1, 0, 150, 300, 'end', {}, html);
+
+});
+
+editor.on("nodeRemoved",(id)=>{
+/*
+let removedId = parseInt(id);
+
+let keys = Object.keys(metadata);
+
+let filteredKeys = keys.filter((k)=>k!==(`${id}`));
+
+
+
+console.log(filteredKeys);
+
+let mappedKeys = filteredKeys.map((k)=>{
+
+console.log(k);
+
+let mappedObject = {};
+
+let indexId = parseInt(k);
+
+console.log(indexId);
+
+if(indexId<=removedId){
+mappedObject[k]=metadata[k];
+}
+else {
+ mappedObject[`${parseInt(indexId)-1}`]=metadata[k];  
+}
+return mappedObject;
+});
+
+metadata = {};
+
+console.log(mappedKeys);
+
+mappedKeys.forEach((k)=>{
+
+metadata[Object.keys(k)[0]]=k[Object.keys(k)[0]];
+
+});
+
+console.log("metadata updated");
+console.log(metadata);
+*/
+
+  delete metadata[`${id}`];
+console.log(metadata);
+});
 
 editor.on("nodeCreated",(id)=>{
 
 const createdNode = document.getElementById("node-"+id);
-if(createdNode.classList.contains("enode")){
+
+metadata[`${id}`]={};
+metadata[`${id}`].connectedNodes={};
+console.log("metadata updated");
+
+console.log(metadata);
+
+if(createdNode.classList.contains("start")){
+
+metadata[`${id}`].nodeType="startnode";
+
+}
+
+else if(createdNode.classList.contains("end")){
+
+metadata[`${id}`].nodeType="endnode";
+
+}
+
+else if(createdNode.classList.contains("enode")){
+
+metadata[`${id}`].nodeType="enode";
 
 const selectedValue = createdNode.querySelector(".selected-value");
 
@@ -455,6 +595,19 @@ const templateSelector = createdNode.querySelector(".template-selector");
 
 const active = createdNode.querySelector(".active");
 const inactive = createdNode.querySelector(".inactive");
+const waitingInput = createdNode.querySelector("input");
+
+
+waitingInput.addEventListener("input" ,(e)=>{
+
+console.log("change detected");
+
+metadata[`${id}`].waiting=e.target.value;
+
+console.log(metadata[`${id}`]);
+
+});
+
 
 active.addEventListener("click",(eve)=>{
 eve.stopPropagation();
@@ -518,6 +671,8 @@ ev.target.innerHTML = existingValue;
 
 }
 else if(createdNode.classList.contains("replynode")){
+
+metadata[`${id}`].nodeType="replynode";
 
 const activeInbox = createdNode.querySelector(".active-inbox");
 const inactiveInbox = createdNode.querySelector(".inactive-inbox");
@@ -599,7 +754,24 @@ inactiveAi.classList.remove("hidden");
 }
 else if(createdNode.classList.contains("noreply")|| createdNode.classList.contains("opened")){
 
+if(createdNode.classList.contains("noreply")){
+metadata[`${id}`].nodeType="noreply";
+}
+else {
+metadata[`${id}`].nodeType="opened";
+}
+
 const selectedValue = createdNode.querySelector(".selected-value");
+
+const waitingTime = createdNode.querySelector("input");
+
+waitingTime.addEventListener("input",(e)=>{
+
+e.stopPropagation();
+
+metadata[`${id}`].waitingTime=e.target.value;
+
+});
 
 const templateSelector = createdNode.querySelector(".template-selector");
 
@@ -614,6 +786,7 @@ active.classList.add("hidden");
 
 templateSelector.classList.add("hidden");
 templateSelector.classList.remove("flex");
+waitingTime.classList.add("hidden");
 
 createdNode.classList.remove("spreaded");
 
@@ -625,6 +798,7 @@ inactive.classList.add("hidden");
 
 templateSelector.classList.add("flex");
 templateSelector.classList.remove("hidden");
+waitingTime.classList.remove("hidden");
 
 createdNode.classList.add("spreaded");
 
@@ -685,20 +859,17 @@ ev.target.innerHTML = existingValue;
 save.addEventListener("click",async (ev)=>{
 ev.stopPropagation();
 
-const validateFlow = (expData)=>{
 
-return false;
-
-};
 
 const exportedData = editor.export();
 
-
+console.log(exportedData);
 
 let sequences = data.sequences.map((s)=>{
 if(s.name===sequenceName){
 	s.flow = exportedData;
   s.validity = validateFlow(exportedData);
+  s.metadata = metadata;
 }
 
 return s;
@@ -708,14 +879,29 @@ await update(user,"sequences", sequences,"e");
 
 });
 
+editor.on("connectionCreated",(metaObject)=>{
+
+let nodeObject = {};
+nodeObject[metaObject.input_id]=metadata[metaObject.input_id].nodeType;
+metadata[metaObject.output_id].connectedNodes=nodeObject;
+console.log(metadata);
+});
+
+editor.on("connectionRemoved",(metaObject)=>{
+
+delete metadata[metaObject.output_id].connectedNodes[metaObject.input_id];
+
+console.log(metadata);
+});
 
 editor.start();
 
 
 const seq = data.sequences.filter((s)=>s.name===sequenceName);
 
+if(seq[0].flow!==undefined){  
 editor.import(seq[0].flow);
-
+}
 
 
 /*
