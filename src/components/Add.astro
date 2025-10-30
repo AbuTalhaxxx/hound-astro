@@ -1,4 +1,11 @@
 ---
+/**
+ * A component for adding new items, such as emails, templates, lists, etc.
+ * @property {string} componentType - The type of component to add (e.g., "EMAIL", "TEMPLATE").
+ * @property {string[]} [sequences] - An array of sequence names.
+ * @property {string[]} [addresses] - An array of email addresses.
+ * @property {string[]} [lists] - An array of list names.
+ */
 import '@fontsource-variable/space-grotesk';
 const componentType = Astro.props.componentType; 
 const sequences = Astro.props.sequences;

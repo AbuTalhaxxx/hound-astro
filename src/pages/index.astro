@@ -1,4 +1,8 @@
 ---
+/**
+ * The home page of the application.
+ * It redirects authenticated users to the dashboard, and unauthenticated users to the login page.
+ */
  const cookie = Astro.cookies.has("user");
 
 if(cookie){

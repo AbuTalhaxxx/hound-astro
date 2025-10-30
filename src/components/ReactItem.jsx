@@ -1,9 +1,23 @@
 import { useState, useEffect } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 
+/**
+ * A React component that displays a user's mailbox items.
+ * @param {object} props - The component's props.
+ * @param {string} props.user - The user's email.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function ReactItem({user}){
 	
+/**
+ * State for the user's mailbox.
+ * @type {[object, function]}
+ */
 const [mailboxState, setMailboxState ] = useState({});
+/**
+ * State for the status of each mailbox item.
+ * @type {[boolean[], function]}
+ */
 const [statusContainer, setStatusContainer] = useState([]);
 
 useEffect(()=>{

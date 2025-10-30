@@ -1,6 +1,27 @@
 ---
+/**
+ * A component for displaying an item, such as an email, template, or campaign.
+ * @property {string} componentType - The type of component being displayed.
+ * @property {boolean} active - Whether the item is active.
+ * @property {string} name - The name of the item.
+ * @property {number} index - The index of the item.
+ * @property {string} [address] - The email address.
+ * @property {string} [serverAddress] - The server address.
+ * @property {string} [portNumber] - The port number.
+ * @property {string} [password] - The password.
+ * @property {string} [subject] - The email subject.
+ * @property {string} [contentname] - The email content.
+ * @property {string} [email] - The lead's email.
+ * @property {string} [description] - The lead's description.
+ * @property {string[]} [sequences] - An array of sequence names.
+ * @property {string} [sequence] - The selected sequence.
+ * @property {string} [list] - The selected list.
+ * @property {string} [interval] - The campaign interval.
+ * @property {string[]} [lists] - An array of list names.
+ * @property {string[]} [addresses] - An array of email addresses.
+ */
 
-const componentType = Astro.props.componentType; 
+const componentType = Astro.props.componentType;
 const active = Astro.props.active;
 const name = Astro.props.name;
 const index = Astro.props.index;
