@@ -3,17 +3,7 @@ import { getFirestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove} from "fi
 import { getAuth, signInWithEmailAndPassword  } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBBZbFiWpOE_fDL9LxJkttoiSUHgC4ThSc",
-  
-    authDomain: "marketing-backend-5f8b7.firebaseapp.com",
-  
-    projectId: "marketing-backend-5f8b7",
-  
-    storageBucket: "marketing-backend-5f8b7.appspot.com",
-  
-    messagingSenderId: "660284956285",
-  
-    appId: "1:660284956285:web:1eb69c8339a525f80e5b14",
+   //leaving this empty due to security concerns
   };
 
 const firebaseApp = initializeApp(firebaseConfig);
